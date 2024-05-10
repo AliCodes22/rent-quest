@@ -25,7 +25,7 @@ const HomeProperties = () => {
           </div>
         </div>
       </section>
-      <section class="m-auto max-w-lg my-10 px-6">
+      <section className="m-auto max-w-lg my-10 px-6">
         <Link
           href="/properties"
           className="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"

@@ -30,7 +30,7 @@ const Hero = () => {
             </label>
             <select
               id="property-type"
-              class="w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500"
             >
               <option value="All">All</option>
               <option value="Apartment">Apartment</option>

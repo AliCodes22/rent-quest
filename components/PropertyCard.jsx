@@ -17,7 +17,7 @@ const PropertyCard = ({ property }) => {
         height={0}
         width={0}
         alt=""
-        class="w-full h-auto rounded-t-xl"
+        className="w-full h-auto rounded-t-xl"
       />
       <div className="p-4">
         <div className="text-left md:text-center lg:text-left mb-6">
