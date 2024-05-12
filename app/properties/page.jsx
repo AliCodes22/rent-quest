@@ -1,7 +1,19 @@
 import PropertyCard from "@/components/PropertyCard";
-import properties from "@/properties.json";
 
-const PropertyPage = () => {
+const fetchProperties = async () => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_DOMAIN}/properties`);
+
+    if (!res.ok) {
+      throw new Error("Failed to retrieve data");
+    }
+
+    return res.json();
+  } catch (error) {}
+};
+
+const PropertyPage = async () => {
+  const properties = await fetchProperties();
   return (
     <section className="px-4 py-6">
       <div className="container-xl lg:container m-auto px-4 py-6">
