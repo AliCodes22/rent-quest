@@ -1,21 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import addProperty from "@/app/api/actions/addProperty";
+import { useState, useEffect } from "react";
 
 const AddPropertyForm = () => {
+  const [mounted, setMounted] = useState(false);
+
   const [fields, setFields] = useState({
-    type: "",
-    name: "",
-    description: "",
+    type: "test",
+    name: "test",
+    description: "test",
     location: {
-      street: "",
-      city: "",
-      state: "",
-      zipcode: "",
+      street: "test",
+      city: "test",
+      state: "test",
+      zipcode: "test",
     },
-    beds: "",
-    baths: "",
-    square_feet: "",
+    beds: "1",
+    baths: "1",
+    square_feet: "1",
     amenities: [],
     rates: {
       weekly: "",
@@ -23,9 +26,9 @@ const AddPropertyForm = () => {
       nightly: "",
     },
     seller_info: {
-      name: "",
-      email: "",
-      phone: "",
+      name: "test",
+      email: "test@mail.com",
+      phone: "438-444-4444",
     },
     images: [],
   });
@@ -44,10 +47,10 @@ const AddPropertyForm = () => {
         },
       }));
     } else {
-      setFields({
+      setFields((prevFields) => ({
         ...prevFields,
         [name]: value,
-      });
+      }));
     }
   };
 
@@ -87,8 +90,12 @@ const AddPropertyForm = () => {
     }));
   };
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <form action="/api/properties" method="POST" encType="multipart/form-data">
+    <form action={addProperty}>
       <h2 className="text-3xl text-center font-semibold mb-6">Add Property</h2>
 
       <div className="mb-4">
@@ -453,19 +460,6 @@ const AddPropertyForm = () => {
               name="rates.monthly"
               className="border rounded w-full py-2 px-3"
               value={fields.rates.monthly}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="flex items-center">
-            <label htmlFor="nightly_rate" className="mr-2">
-              Nightly
-            </label>
-            <input
-              type="number"
-              id="nightly_rate"
-              name="rates.nightly"
-              className="border rounded w-full py-2 px-3"
-              value={fields.rates.nightly}
               onChange={handleChange}
             />
           </div>

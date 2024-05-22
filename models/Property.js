@@ -50,13 +50,11 @@ const PropertySchema = new Schema(
       },
     ],
     rates: {
-      nightly: {
+      weekly: {
         type: Number,
-        required: true,
       },
       monthly: {
         type: Number,
-        required: true,
       },
     },
     seller_info: {
@@ -67,7 +65,7 @@ const PropertySchema = new Schema(
         type: String,
       },
       phone: {
-        type: Number,
+        type: String,
       },
     },
     images: [
