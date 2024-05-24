@@ -1,9 +1,6 @@
 import connectDB from "@/config/db";
 import Property from "@/models/Property";
 
-import { getSessionUser } from "@/utils/getSessionUser";
-import { NextResponse } from "next/server";
-
 // GET /api/properties
 export const GET = async (request) => {
   try {

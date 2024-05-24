@@ -7,14 +7,14 @@ const AddPropertyForm = () => {
   const [mounted, setMounted] = useState(false);
 
   const [fields, setFields] = useState({
-    type: "test",
-    name: "test",
-    description: "test",
+    type: "",
+    name: "",
+    description: "",
     location: {
-      street: "test",
-      city: "test",
-      state: "test",
-      zipcode: "test",
+      street: "",
+      city: "",
+      state: "",
+      zipcode: "",
     },
     beds: "1",
     baths: "1",
@@ -26,9 +26,9 @@ const AddPropertyForm = () => {
       nightly: "",
     },
     seller_info: {
-      name: "test",
-      email: "test@mail.com",
-      phone: "438-444-4444",
+      name: "",
+      email: "",
+      phone: "",
     },
     images: [],
   });
