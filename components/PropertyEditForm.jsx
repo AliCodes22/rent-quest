@@ -1,7 +1,7 @@
 "use client";
 
 import { fetchSingleProperty } from "@/utils/requests";
-import { useParams, useRouter } from "next/navigation";
+import { redirect, useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -13,9 +13,9 @@ const PropertyEditForm = () => {
   const [mounted, setMounted] = useState(false);
 
   const [fields, setFields] = useState({
-    type: property.type,
-    name: property.name,
-    description: property.description,
+    type: "",
+    name: "",
+    description: "",
     location: {
       street: "",
       city: "",
@@ -84,7 +84,23 @@ const PropertyEditForm = () => {
     e.preventDefault();
 
     try {
-    } catch (error) {}
+      const formData = new FormData(e.target);
+
+      const res = await fetch(`/api/properties/${id}`, {
+        method: "PUT",
+        body: formData,
+      });
+
+      if (res.status === 200) {
+        router.push(`/properties/${id}`);
+      } else if (res.status === 401 || res.status === 403) {
+        toast.error("permission denied");
+      } else {
+        toast.error("Something went wrong");
+      }
+    } catch (error) {
+      toast.error("Something went wrong");
+    }
   };
 
   useEffect(() => {
