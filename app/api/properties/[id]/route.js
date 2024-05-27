@@ -122,6 +122,8 @@ export const PUT = async (request, { params }) => {
 
     const updatedProperty = await Property.findByIdAndUpdate(id, propertyData);
 
+    console.log(formData);
+
     return new Response(JSON.stringify(updatedProperty), {
       status: 200,
     });
