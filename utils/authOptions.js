@@ -22,6 +22,7 @@ export const authOptions = {
     async signIn({ profile }) {
       await connectDB();
 
+      console.log(profile);
       const userExists = await User.findOne({ email: profile.email });
       // 3. If not, then add user to database
       if (!userExists) {
@@ -30,7 +31,7 @@ export const authOptions = {
 
         await User.create({
           email: profile.email,
-          username,
+          userName: username,
           image: profile.picture,
         });
       }
@@ -39,6 +40,7 @@ export const authOptions = {
     },
     // Modifies the session object
     async session({ session }) {
+      console.log(session);
       // 1. Get user from database
       const user = await User.findOne({ email: session.user.email });
       // 2. Assign the user id to the session
