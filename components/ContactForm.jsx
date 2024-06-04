@@ -1,36 +1,44 @@
 "use client";
 
-import { useState } from "react";
-
+import { sendMessage } from "@/app/api/actions/sendMessage";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 import { FaPaperPlane } from "react-icons/fa";
+import { toast } from "react-toastify";
+import { useFormState } from "react-dom";
 
 const ContactForm = ({ property }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [phone, setPhone] = useState("");
-  const [submitted, setSubmitted] = useState(false);
+  const { data: session } = useSession();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const [submitState, formAction] = useFormState(sendMessage, {});
 
-    const data = {
-      name,
-      email,
-      phone,
-      message,
-      recipient: property.owner,
-      property: property._id,
-    };
-  };
+  useEffect(() => {
+    if (submitState.error) toast.error(submitState.error);
+    if (submitState.submitted) toast.success("Message sent successfully");
+  }, [submitState]);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
       <h3 className="text-xl font-bold mb-6">Contact Property Manager</h3>
-      {submitted ? (
-        <p className="text-green-500 mb-4">Your message has been submitted</p>
+      {!session ? (
+        <p>You must be logged in</p>
+      ) : submitState.submitted ? (
+        <p className="text-green-500 mb-4">Message sent successfully</p>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form action={sendMessage}>
+          {/* NOTE: Here we have two hidden inputs to add the property id and the owner to our FormData submission */}
+          <input
+            type="hidden"
+            id="property"
+            name="property"
+            defaultValue={property._id}
+          />
+          <input
+            type="hidden"
+            id="recipient"
+            name="recipient"
+            defaultValue={property.owner}
+          />
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
@@ -41,10 +49,9 @@ const ContactForm = ({ property }) => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="name"
+              name="name"
               type="text"
               placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
@@ -58,10 +65,9 @@ const ContactForm = ({ property }) => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="email"
+              name="email"
               type="email"
               placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.email)}
               required
             />
           </div>
@@ -75,9 +81,8 @@ const ContactForm = ({ property }) => {
             <input
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               id="phone"
+              name="phone"
               type="text"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
               placeholder="Enter your phone number"
             />
           </div>
@@ -91,9 +96,8 @@ const ContactForm = ({ property }) => {
             <textarea
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 h-44 focus:outline-none focus:shadow-outline"
               id="message"
+              name="message"
               placeholder="Enter your message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
             ></textarea>
           </div>
           <div>
