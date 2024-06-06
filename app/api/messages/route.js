@@ -23,9 +23,10 @@ export const GET = async () => {
     const messages = await Message.find({
       recipient: userId,
     })
-      .populate("sender", "name")
-      .populate("property", "title");
+      .populate("sender", "userName")
+      .populate("property", "name");
 
+    console.log(messages);
     return new Response(JSON.stringify(messages));
   } catch (error) {
     console.log(error);
