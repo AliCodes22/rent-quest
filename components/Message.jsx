@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const Message = ({ message }) => {
   const [isRead, setIsRead] = useState(message.read);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   const handleReadClick = async (e) => {
     try {
@@ -25,6 +26,27 @@ const Message = ({ message }) => {
       }
     } catch (error) {}
   };
+
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`/api/messages/${message._id}`, {
+        method: "DELETE",
+      });
+
+      if (res.status === 200) {
+        setIsDeleted(true);
+        toast.success("Message deleted");
+      }
+    } catch (error) {
+      console.log(error);
+
+      toast.error("Message not deleted");
+    }
+  };
+
+  if (isDeleted) {
+    return null;
+  }
 
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
@@ -73,6 +95,7 @@ const Message = ({ message }) => {
         className={`"mt-4 mr-3 ${
           isRead ? "bg-gray-300" : "bg-blue-500 text-white"
         }  py-1 px-3 rounded-md"`}
+        onClick={handleDelete}
       >
         Delete
       </button>
