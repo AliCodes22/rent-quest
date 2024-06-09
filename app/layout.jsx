@@ -6,9 +6,10 @@ import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "photoswipe/dist/photoswipe.css";
 
 export const metadata = {
-  title: "Property Pulse | Find The Perfect Rental",
+  title: "RentQuest | Find The Perfect Rental",
   description: "Find The Perfect Rental",
   keywords: "rental, find rentals, find properties",
 };
